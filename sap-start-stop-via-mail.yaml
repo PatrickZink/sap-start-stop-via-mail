@@ -18,13 +18,17 @@ Parameters:
   SenderAccountID:
     Type: String
     Description: (Required) Account Number from the Sender (SES) Account
-    Default: '210944710679'
+    Default: ''
+  SSMStopStartStackPath:
+    Type: String
+    Description: (Required) S3 HTTPS URL from SMStopStartSAP File
+    Default: ''  
 
 Resources:
   SSMStopStartStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: "https://nbasics-public-shared-resources.s3.eu-central-1.amazonaws.com/SSMStopStartSAP_v2_pz.yml"
+      TemplateURL: !Ref SSMStopStartStackPath
       Parameters:
         CustomerName: !Ref CompanyCustomerName
         EmailforNotification: !Ref EmailforNotifications
