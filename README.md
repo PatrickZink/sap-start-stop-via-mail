@@ -12,7 +12,8 @@ Each S3 bucket is equipped with a trigger that is activated for new files under 
 
 Subsequently, the SAP system with the mentioned SID is started or stopped. This process manages the EC2 instances as well as the respective SAP and HANA services. The core of this automation is my adapted version, which, unlike the [original](https://github.com/aws-samples/aws-ssm-automation-for-start-stop-sap?tab=readme-ov-file#readme), sends more detailed SNS notifications to provide precise information about which system for which SID or in which account was started or stopped. This makes it easier to keep track of a multitude of SAP systems and AWS accounts.
 
-![SAP-Start-Stop-via-Mail drawio](https://github.com/PatrickZink/sap-start-stop-via-mail/assets/70896863/90d89723-d6ac-4367-8bd4-0ca3aa5510f2)
+![SAP-Start-Stop-via-Mail drawio](https://github.com/PatrickZink/sap-start-stop-via-mail/assets/70896863/fee81723-9d36-423c-8dcc-6875521582fd)
+
 
 
 ## Installation
