@@ -21,7 +21,7 @@ Parameters:
     Default: ''
   SSMStopStartStackPath:
     Type: String
-    Description: (Required) S3 HTTPS URL from SMStopStartSAP File
+    Description: (Required) S3 HTTPS URL from SMStopStartSAP.yaml File
     Default: ''  
 
 Resources:
@@ -230,25 +230,47 @@ Resources:
             Action: "sts:AssumeRole"
       ManagedPolicyArns:
         - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-        - "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
-        - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-        - "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
-        - "arn:aws:iam::aws:policy/AmazonSSMFullAccess"
       Policies:
-        - PolicyName: "KMSAccessPolicy"
+        - PolicyName: "SAPStartStop"
           PolicyDocument:
-            Version: "2012-10-17"
+            Version: '2012-10-17'
             Statement:
-              - Effect: "Allow"
+              - Effect: 'Allow'
                 Action:
-                  - "kms:RetireGrant"
-                  - "kms:CreateGrant"
-                  - "kms:ReEncrypt*"
-                  - "kms:GenerateDataKey*"
-                  - "kms:Encrypt"
-                  - "kms:DescribeKey"
-                  - "kms:Decrypt"
-                Resource: "arn:aws:kms:*:*:key/*"
+                  - 'ec2:DescribeInstanceStatus'
+                  - 'ec2:StartInstances'
+                  - 'ec2:StopInstances'
+                  - 'ec2:DescribeInstances'
+                Resource: '*'
+              - Effect: 'Allow'
+                Action:
+                  - 'kms:Decrypt'
+                  - 'kms:CreateGrant'
+                Resource: '*'
+              - Effect: 'Allow'
+                Action:
+                  - 'ssm:StartAutomationExecution'
+                Resource: !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:automation-definition/ssmsapstartstop:*"
+              - Effect: 'Allow'
+                Action:
+                  - "ssm:StartAutomationExecution"
+                  - "ssm:DescribeAutomationExecutions"
+                  - "ssm:GetAutomationExecution"
+                  - "ssm:SendCommand"
+                  - "ssm:ListCommands"
+                  - "ssm:ListCommandInvocations"
+                  - "ssm:GetCommandInvocation"
+                  - "ssm:DescribeInstanceInformation"
+                Resource: '*'
+              - Effect: 'Allow'
+                Action:
+                  - 'sns:Publish'
+                Resource: !Sub "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:SSMSAPStartStopNotifications"
+              - Effect: 'Allow'
+                Action:
+                  - 's3:GetObject'
+                  - 's3:DeleteObject'
+                Resource: !Sub "arn:aws:s3:::${S3BucketName}/*"
   LambdaFunctionPermission:
     Type: "AWS::Lambda::Permission"
     DependsOn: SAPStartStopLambdaFunction
