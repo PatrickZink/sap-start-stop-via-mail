@@ -10,7 +10,7 @@ Parameters:
     AllowedPattern: ^([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)$
   AllowedEmailDomain:
     Type: String
-    Description: (Required) Which emails or domains are allowed to start/stop the SAP systems? You can provide multiple emails or domains separated by commas, for example, "max.mustermann@gmail.de,nbasics.de."
+    Description: (Required) Which emails or domains are allowed to start/stop the SAP systems? You can provide multiple emails or domains separated by commas, for example, "max.mustermann@gmail.de,gmail.de."
   S3BucketName:
     Type: String
     Description: (Required) Provide a name for the S3 Bucket where the received emails are 
