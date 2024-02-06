@@ -1,5 +1,7 @@
 # sap-start-stop-via-mail
 
+This CloudFormation template deploys a solution with which various SAP systems can be started and stopped via email.
+
 ## Description
 
 There is a shared-service account that provides the AWS WorkMail email address. A free test domain is used for this purpose, which is fully sufficient. With the help of SES rules, emails are sent to the respective S3 buckets of the connected AWS accounts. If there is only one account in which the SAP systems are located, everything can also be operated in a single account.
