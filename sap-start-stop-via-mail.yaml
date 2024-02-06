@@ -13,7 +13,7 @@ Parameters:
     Description: (Required) Which emails or domains are allowed to start/stop the SAP systems? You can provide multiple emails or domains separated by commas, for example, "max.mustermann@gmail.de,gmail.de."
   S3BucketName:
     Type: String
-    Description: (Required) Provide a name for the S3 Bucket where the received emails are 
+    Description: (Required) Provide a unique name for the S3 Bucket where the received emails are 
     AllowedPattern: ^[a-z0-9.-]{3,63}$
   SenderAccountID:
     Type: String
