@@ -24,12 +24,12 @@ Unfortunately, the AWS WorkMail domain cannot be created with CloudFormation, so
 ![image](https://github.com/PatrickZink/sap-start-stop-via-mail/assets/70896863/cc8b04b4-9a4d-4955-b5e8-b41dede91300)
 
 3. Upload SSMStopStartSAP.yaml into an S3 bucket in the target account.
-4. Create Stack with sap-start-stop-via-mail.yaml.
-5. Specify input parameters for sap-start-stop-via-mail.yaml.
+4. Create Stack with sap-start-stop-via-mail.yaml in the target account.
+5. Specify input parameters for sap-start-stop-via-mail.yaml in the target account.
 ![image](https://github.com/PatrickZink/sap-start-stop-via-mail/assets/70896863/face20d9-a3da-4385-8a2d-27d5453d7791)
 6. In the email inbox of the account entered for the "EmailforNotifications" parameter, there should be an SNS confirm subscription email received. Please confirm this.
-7. Tag the EC2 instances accordingly -> [README](https://github.com/aws-samples/aws-ssm-automation-for-start-stop-sap?tab=readme-ov-file#readme)
-8. (Optional) An additional optional tag "SID:related" has been implemented. With this, EC2 instances can be stopped and started. Proceed as follows:
+7. Tag the EC2 instances in the target account accordingly -> [README](https://github.com/aws-samples/aws-ssm-automation-for-start-stop-sap?tab=readme-ov-file#readme)
+8. (Optional) An additional tag "SID:related" has been implemented. With this, related EC2 instances can be stopped and started, like a Jumpserver. Proceed as follows:
    - Tag-Key -> SID:related -> e.g., S4H:related
    - Tag-Value -> Specify EC2 instance IDs comma-separated -> e.g., i-089c6ffd0b9b572e6,i-0b90e2791acbbd243
 9. In the shared service account SES -> Email receiving -> INBOUND_MAIL -> Create Rule
@@ -44,4 +44,25 @@ Unfortunately, the AWS WorkMail domain cannot be created with CloudFormation, so
 
 To deploy the solution to additional target accounts, repeat only steps 3 through 9.
 
+## How to use: start/stop via Mail:
 
+Send an email from an address that is on the "AllowedEmailDomain" list to "accountname@sap-start-stop.awsapps.com". The subject must include "start" or "stop" as well as the desired SID. For example:
+- Start S4H
+- Stop S4H
+
+Subsequently, an SNS notification will be sent to all subscribers of the SNS topic.
+
+## Add additional recipients as subscribers to an SNS topic
+
+1. Sign in to the AWS Management Console and open the Amazon SNS console at https://console.aws.amazon.com/sns/.
+2. In the navigation panel, choose "Topics" and then select the SNS topic "SSMSAPStartStopNotifications".
+3. Click on the "Create subscription" button.
+4. In the "Create subscription" dialog box, choose the Email protocol for the subscription.
+5. In the "Endpoint" field, enter the recipient’s email address.
+6. Click the "Create subscription" button.
+7. The protocol requires confirmation. AWS SNS will send a confirmation message to the endpoint. The recipient will need to confirm the subscription by following the instructions in the message.
+8. Once the subscription is confirmed, the new recipient will start receiving notifications sent to the SNS topic.
+
+## Logs:
+- The logs of the Lambda function can be found in CloudWatch under Log Groups -> /aws/lambda/SAPStartStop.
+- The logs of the SSM Automation for starting and stopping are located under AWS Systems Manager -> Automation -> Executions.
