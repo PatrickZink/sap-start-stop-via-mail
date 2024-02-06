@@ -63,6 +63,9 @@ Subsequently, an SNS notification will be sent to all subscribers of the SNS top
 7. The protocol requires confirmation. AWS SNS will send a confirmation message to the endpoint. The recipient will need to confirm the subscription by following the instructions in the message.
 8. Once the subscription is confirmed, the new recipient will start receiving notifications sent to the SNS topic.
 
+## Adjust AllowedEmailDomain 
+To adjust the Email Allow Sender List, simply update the stack and specify the new AllowedEmailDomain as an input parameter.
+
 ## Logs:
 - The logs of the Lambda function can be found in CloudWatch under Log Groups -> /aws/lambda/SAPStartStop.
 - The logs of the SSM Automation for starting and stopping are located under AWS Systems Manager -> Automation -> Executions.
