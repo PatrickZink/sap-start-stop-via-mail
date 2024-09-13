@@ -396,16 +396,6 @@ Resources:
                 CloudWatchOutputEnabled: true
               TimeoutSeconds: 120
             nextStep: START_QUERY_AWS_APPInstanceIds
-            description: |
-              Step Summary
-
-              ***
-
-              ** Start SAP ASCS application on the instance **
-                - Gets the system number from `/usr/sap/services`
-                - Starts ASCS using `sapcontrol`
-
-              ***
           - name: START_QUERY_AWS_APPInstanceIds
             description: !Sub |
               Step Summary
