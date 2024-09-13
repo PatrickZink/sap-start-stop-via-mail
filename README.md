@@ -49,9 +49,10 @@ To deploy the solution to additional target accounts, repeat only steps 3 throug
 
 ## How to use: start/stop via Mail:
 
-Send an email from an address that is on the "AllowedEmailDomain" list to "accountname@sap-start-stop.awsapps.com". The subject must include "start" or "stop" as well as the desired SID. For example:
+Send an email from an address on the "AllowedEmailDomain" list to "accountname@sap-start-stop.awsapps.com". The subject must include "start", "stop", or "status" along with the desired SID. For example:
 - Start S4H
 - Stop S4H
+- Status S4H
 
 Subsequently, an SNS notification will be sent to all subscribers of the SNS topic.
 
